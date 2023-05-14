@@ -12,8 +12,8 @@ function App() {
 
   const [acceleration, setAcceleration] = useState(0);
   const [velocity, setVelocity] = useState(0);
-  const [horizontalPos, setHorizontalPos] = useState(50);
-  const [verticalPos, setVerticalPos] = useState(50);
+  const [horizontalPos, setHorizontalPos] = useState(100);
+  const [verticalPos, setVerticalPos] = useState(100);
 
   const [hasVelocityVector, setHasVelocityVector] = useState(false);
   const [hasAccelerationVector, setHasAccelerationVector] = useState(false);
@@ -26,7 +26,7 @@ function App() {
         <div className="m-10 drop-shadow-lg">
     
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} />
             </div>
 
             <div className='p-6 bg-slate-100 flex justify-center'>

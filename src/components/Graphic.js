@@ -3,7 +3,7 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-    const {width, height} = props;
+    const {width, height, xPos, yPos} = props;
 
 
     const draw = p5 => {
@@ -14,20 +14,20 @@ export default function Graphics(props) {
 
         p5.stroke(32, 111, 153);
         p5.fill(255,255,255)
-        p5.circle(150, height - 100, 100, 100)
+        p5.circle(xPos, height - yPos, 100, 100)
 
 
         p5.stroke(217, 85, 24)
-        p5.line(150, height - 100, 160, height - 50)
+        p5.line(xPos, height - yPos, xPos - 60, height - 50)
 
 
         p5.stroke(24, 217, 43)
-        p5.line(150, height - 100, 101, height - 120)
+        p5.line(xPos, height - yPos, 101, height - 120)
 
 
 
         p5.stroke(217, 24, 211)
-        p5.line(150, height - 100, 200, height - 118)
+        p5.line(xPos, height - yPos, xPos + 50, height - yPos)
 
 
 
