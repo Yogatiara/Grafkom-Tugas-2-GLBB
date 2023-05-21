@@ -6,6 +6,7 @@ export default function Graphics(props) {
     let {xPos, velocity, acceleration, width, height, yPos, r} = props;
 
     let xspeed = velocity;
+    let yspeed = velocity;
    
     const draw = p5 => {
         p5.clear();
@@ -25,7 +26,7 @@ export default function Graphics(props) {
 
         // garis hijau
         p5.stroke(0, 255, 0)
-        p5.line( xPos - r / 2, (height - yPos), xPos + r / 2  , (height - yPos))
+        p5.line( xPos - r / 2, (height - yPos), xPos + 50, (height - yPos))
 
         // pembatas kanvas kiri
         p5.fill(118,181,197)
@@ -48,15 +49,29 @@ export default function Graphics(props) {
         p5.rect(0, height - 1, width, 20)
 
     
-        if(xspeed != 0) {
-            xPos += xspeed;
-            if(xPos < 0 || xPos > width - r) {
-                xspeed = -xspeed;
-                acceleration = -acceleration;
-                xPos = Math.max(0, Math.min(xPos, width - r));
+        // HORIZONTAL BOUNCING
+        // if(xspeed != 0) {
+        //     xPos += xspeed;
+        //     if(xPos < 0 || xPos > width - r) {
+        //         xspeed = -xspeed;
+        //         acceleration = -acceleration;
+        //         xPos = Math.max(0, Math.min(xPos, width - r));
+        //     }
+
+        //     xspeed -= acceleration;
+        // }
+
+
+        // DOWN BOUNCE
+        if(yPos != height - r || yspeed != 0) {
+            yPos -= yspeed;
+            if(yPos > height -r || yPos < r) {
+                yPos = Math.max(0, Math.min(yPos, height - r));
+                yspeed *= -1;
+                yspeed *= 0.8;
             }
 
-            xspeed -= acceleration;
+            yspeed++;
         }
 
     }

@@ -12,11 +12,11 @@ function App() {
 
   const [acceleration, setAcceleration] = useState(1);
   const [velocity, setVelocity] = useState(20);
-  const [horizontalPos, setHorizontalPos] = useState(100);
-  const [verticalPos, setVerticalPos] = useState(50);
+  const [horizontalPos, setHorizontalPos] = useState(300);
+  const [verticalPos, setVerticalPos] = useState(400);
   const [radius, setRadius] = useState(100);
   
-  const prevVerticalPos = useRef();
+ 
 
   const [hasVelocityVector, setHasVelocityVector] = useState(false);
   const [hasAccelerationVector, setHasAccelerationVector] = useState(false);
@@ -40,18 +40,13 @@ function App() {
   }
 
   const handleOnYPosChange = (e) => {
-    prevVerticalPos.current = verticalPos;
     setVerticalPos(e.target.value);
-
-    // if(prevVerticalPos.current > verticalPos) { 
-    //   setRadius(radius + verticalPos / 100); 
-    // } else {
-    //   setRadius(radius - verticalPos / 100); 
-    // }
-
-    console.log(prevVerticalPos.current)
-    console.log(verticalPos);
   }
+
+  const handleDownBounce = () => {
+
+  }
+
 
   return (
     <div className="min-h-[100vh] bg-sky-100">
@@ -59,38 +54,30 @@ function App() {
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
               <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} />
-              {/* <Ball width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} /> */}
-              {/* <BallCanvas  width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} /> */}
+            
             </div>
 
-            <div className='p-6 bg-slate-100 flex justify-center'>
+            <div className='p-6 bg-slate-100 flex justify-between'>
+              <div></div>
               <div className='flex'>
-                <div class="flex justify-center items-center rotate-180">   
-                    <button class="w-16 h-16 rounded-full bg-lime-600 focus:outline-none flex justify-center items-center ml-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" fill='#fff'/> </svg>
-                    </button>
-                  </div>
-
-
                   <div class="flex justify-center items-center rotate-180">   
                     <button class="w-20 h-20 rounded-full bg-blue-500 focus:outline-none flex justify-center items-center" onClick={handleOnPrevButtonClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" fill='#fff'/> </svg>
                     </button>
                   </div>
-            
                   <div class="flex justify-center items-center mx-3">   
                     <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={(e) => setVelocity(e.target.value)} />
                   </div>
-
                   <div class="flex justify-center items-center">   
                     <button class="w-20 h-20 rounded-full bg-blue-500 focus:outline-none flex justify-center items-center" onClick={handleOnNextButtonClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" fill='#fff'/> </svg>
                     </button>
                   </div>
-
-                  <div class="flex justify-center items-center">   
-                    <button class="w-16 h-16 rounded-full bg-lime-600 focus:outline-none flex justify-center items-center ml-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16"> <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" fill='#fff'/> </svg>
+              </div>
+              <div>
+              <div class="flex justify-center items-center">   
+                    <button class="w-20 h-20 rounded-full bg-lime-500 focus:outline-none flex justify-center items-center" onClick={handleDownBounce}>
+                    <svg width="50" height="50" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19 7C17.8954 7 17 6.10457 17 5C17 3.89543 17.8954 3 19 3C20.1046 3 21 3.89543 21 5C21 6.10457 20.1046 7 19 7Z" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> <path d="M4 15.5C7 14.5 9.5 15 12 20C12.5 17 14 12.5 15.5 10" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> </svg>
                     </button>
                   </div>
               </div>
