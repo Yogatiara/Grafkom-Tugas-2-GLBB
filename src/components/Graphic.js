@@ -23,7 +23,6 @@ export default function Graphics(props) {
         p5.stroke(51, 51, 255)
         p5.line((xPos - width) + 1000, height - yPos - r / 2, (xPos - width) + 1000 , height - yPos + r / 2)
 
-
         // garis hijau
         p5.stroke(0, 255, 0)
         p5.line( xPos - r / 2, (height - yPos), xPos + r / 2  , (height - yPos))
@@ -48,19 +47,17 @@ export default function Graphics(props) {
         p5.stroke(226,135,67)
         p5.rect(0, height - 1, width, 20)
 
-         if(xspeed <= 0) {
-            xspeed = 0;
-        }
+    
+        if(xspeed != 0) {
+            xPos += xspeed;
+            if(xPos < 0 || xPos > width - r) {
+                xspeed = -xspeed;
+                acceleration = -acceleration;
+                xPos = Math.max(0, Math.min(xPos, width - r));
+            }
 
-        // dibuat ada mod nya
-        if (xPos + xspeed  > width - r * 2 || xPos < r * 2) {
-          xspeed = -xspeed;
-          acceleration -= 1;
-        
+            xspeed -= acceleration;
         }
-
-        xPos += xspeed;
-        xspeed += acceleration;
 
     }
 

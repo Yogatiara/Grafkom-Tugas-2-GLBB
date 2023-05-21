@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 
 import Graphic from './components/Graphic';
@@ -15,10 +15,13 @@ function App() {
   const [horizontalPos, setHorizontalPos] = useState(100);
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
-
+  
+  const prevVerticalPos = useRef();
 
   const [hasVelocityVector, setHasVelocityVector] = useState(false);
   const [hasAccelerationVector, setHasAccelerationVector] = useState(false);
+
+
 
   const handleOnNextButtonClick = () => {
     if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius) {
@@ -37,8 +40,17 @@ function App() {
   }
 
   const handleOnYPosChange = (e) => {
+    prevVerticalPos.current = verticalPos;
     setVerticalPos(e.target.value);
-    setRadius(radius - 1); 
+
+    // if(prevVerticalPos.current > verticalPos) { 
+    //   setRadius(radius + verticalPos / 100); 
+    // } else {
+    //   setRadius(radius - verticalPos / 100); 
+    // }
+
+    console.log(prevVerticalPos.current)
+    console.log(verticalPos);
   }
 
   return (
@@ -47,6 +59,8 @@ function App() {
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
               <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} />
+              {/* <Ball width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} /> */}
+              {/* <BallCanvas  width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} /> */}
             </div>
 
             <div className='p-6 bg-slate-100 flex justify-center'>
