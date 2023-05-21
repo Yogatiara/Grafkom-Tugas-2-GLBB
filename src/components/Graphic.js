@@ -78,6 +78,7 @@ export default function Graphics(props) {
    
     const draw = p5 => {
         p5.clear();
+        p5.smooth();
 
         p5.background(255,255,255);
 
