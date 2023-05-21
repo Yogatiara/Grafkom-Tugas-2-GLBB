@@ -12,15 +12,12 @@ function App() {
 
   const [acceleration, setAcceleration] = useState(1);
   const [velocity, setVelocity] = useState(20);
-  const [horizontalPos, setHorizontalPos] = useState(300);
-  const [verticalPos, setVerticalPos] = useState(400);
+  const [horizontalPos, setHorizontalPos] = useState(100);
+  const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
   
  
-
-  const [hasVelocityVector, setHasVelocityVector] = useState(false);
-  const [hasAccelerationVector, setHasAccelerationVector] = useState(false);
-
+  const [hasDownBounce, setHasDownBounce] = useState(false);
 
 
   const handleOnNextButtonClick = () => {
@@ -35,7 +32,7 @@ function App() {
     if(horizontalPos - velocity < CANVAS_WIDTH - radius * 2 || horizontalPos > radius) {
       setHorizontalPos(horizontalPos + velocity)
     } else {
-      setHorizontalPos(horizontalPos - velocity)
+      setHorizontalPos(-(horizontalPos - velocity))
     }
   }
 
@@ -44,7 +41,7 @@ function App() {
   }
 
   const handleDownBounce = () => {
-
+      setHasDownBounce(!hasDownBounce);
   }
 
 
@@ -53,7 +50,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} />
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} />
             
             </div>
 
@@ -76,7 +73,7 @@ function App() {
               </div>
               <div>
               <div class="flex justify-center items-center">   
-                    <button class="w-20 h-20 rounded-full bg-lime-500 focus:outline-none flex justify-center items-center" onClick={handleDownBounce}>
+                    <button class={"w-20 h-20 rounded-full bg-yellow-600 focus:outline-none flex justify-center items-center " + (hasDownBounce && "bg-yellow-800 drop-shadow-2xl")}onClick={handleDownBounce}>
                     <svg width="50" height="50" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19 7C17.8954 7 17 6.10457 17 5C17 3.89543 17.8954 3 19 3C20.1046 3 21 3.89543 21 5C21 6.10457 20.1046 7 19 7Z" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> <path d="M4 15.5C7 14.5 9.5 15 12 20C12.5 17 14 12.5 15.5 10" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> </svg>
                     </button>
                   </div>
@@ -88,14 +85,14 @@ function App() {
           <div>
             <Slider 
               title="Percepatan (m/s^2)"
-              maxValue={20} 
+              maxValue={10} 
               defaultValue={acceleration} 
               onChange={(e) => setAcceleration(e.target.value)}
             />
 
             <Slider 
               title="Kecepatan (m/s)"
-              maxValue={100} 
+              maxValue={1000} 
               defaultValue={velocity} 
               onChange={(e) => setVelocity(e.target.value)}
             />
@@ -112,7 +109,7 @@ function App() {
               />
               <Slider 
                 title="Posisi Vertikal"
-                maxValue={660}
+                maxValue={550}
                 minValue={50}
                 defaultValue={verticalPos} 
                 onChange={(e) => handleOnYPosChange(e)}
@@ -125,33 +122,24 @@ function App() {
               <div className="flex justify-between mb-9">
                 <label for="" className=" pt-3 text-sm font-medium text-gray-900 dark:text-white">Percepatan (m/s^2) : </label>
                 <input type="number" id="" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                max={CANVAS_HEIGHT / 2} value={acceleration} required/>
+                max={CANVAS_HEIGHT / 2} value={acceleration}  onChange={(e) => setAcceleration(e.target.value)} required/>
               </div>
               <div className="flex justify-between mb-9">
                 <label for="" className="pt-3 text-sm font-medium text-gray-900 dark:text-white">Kecepatan (m/s) : </label>
-                <input  type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" max={CANVAS_WIDTH / 2} value={velocity} required/>
+                <input  type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" max={CANVAS_WIDTH / 2} value={velocity}  onChange={(e) => setVelocity(e.target.value)} required/>
               </div>
               <div className="flex justify-between mb-9">
                 <label for="" className="pt-3 text-sm font-medium text-gray-900 dark:text-white">Posisi Horizontal : </label>
-                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={horizontalPos} max={150} required/>
+                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={horizontalPos} onChange={(e) => setHorizontalPos(e.target.value)}  max={150} required/>
               </div>
 
               <div className="flex justify-between mb-9">
                 <label for="" className="pt-3 text-sm font-medium text-gray-900 dark:text-white">Posisi Vertikal : </label>
-                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={verticalPos} max={150} required/>
+                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={verticalPos} max={150}  onChange={(e) => handleOnYPosChange(e)}  required/>
               </div>
 
               <hr className='mb-12' />
 
-
-            <div class="flex items-center mb-4">
-                <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vektor Kecepatan</label>
-            </div>
-            <div class="flex items-center mb-8">
-                <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vektor Percepatan</label>
-            </div>
 
 
             <ClearButton />
