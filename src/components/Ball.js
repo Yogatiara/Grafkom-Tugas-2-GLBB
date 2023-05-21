@@ -37,17 +37,17 @@ export function Ball(props) {
 
 
 
-export const BallCanvas = () => {
-    const canvasRef = useRef(null);
+export const BallCanvas = (props) => {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    let x = 50; // Koordinat x bola
-    let y = canvas.height / 2; // Koordinat y bola
+    const x = canvas.width / 2; // Koordinat x bola
+    const y = canvas.height / 2; // Koordinat y bola
     let radius = 25; // Radius bola
-    let speed = 10; // Kecepatan awal bola
-    let acceleration = 1; // Percepatan
+    let dx = 5; // Kecepatan awal bola
+    let dy = 5;
 
     const drawBall = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -61,16 +61,22 @@ export const BallCanvas = () => {
     const animate = () => {
       drawBall();
 
-      if (x + radius + speed > canvas.width || x - radius - speed < 0) {
-        speed = -speed; // Mengubah arah bola saat mencapai dinding
-        acceleration -= 1; // Mengurangi percepatan bola
+      if (x + dx > canvas.width - radius || x + dx < radius) {
+        dx = -dx;
+      }
+      if (y + dy > canvas.height - radius || y + dy < radius) {
+        dy = -dy;
       }
 
-      x += speed;
-      speed += acceleration;
+      x += dx;
+      y += dy;
 
-      if (speed <= 0) {
-        speed = 0; // Menghentikan bola jika kecepatan sudah mencapai nol
+      dx *= 0.99; // Mengurangi kecepatan bola secara beraturan
+      dy *= 0.99;
+
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        dx = 0;
+        dy = 0;
       }
 
       requestAnimationFrame(animate);
@@ -79,7 +85,11 @@ export const BallCanvas = () => {
     animate();
   }, []);
 
-  return <canvas ref={canvasRef} width={400} height={400} />;
+  return (
+    <div>
+      <canvas ref={canvasRef} width={400} height={400} />
+    </div>
+  );
 };
 
 

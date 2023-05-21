@@ -5,14 +5,13 @@ import Graphic from './components/Graphic';
 import Slider from './components/Slider';
 import ClearButton from './components/ClearButton';
 import RecordButton from './components/RecordButton';
-import {Ball, BallCanvas} from './components/Ball';
 
 function App() {
   const CANVAS_WIDTH = 1000;
   const CANVAS_HEIGHT = 600;
 
-  const [acceleration, setAcceleration] = useState(0);
-  const [velocity, setVelocity] = useState(100);
+  const [acceleration, setAcceleration] = useState(1);
+  const [velocity, setVelocity] = useState(20);
   const [horizontalPos, setHorizontalPos] = useState(100);
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
@@ -30,7 +29,16 @@ function App() {
   }
 
   const handleOnPrevButtonClick = () => {
-    setHorizontalPos(horizontalPos - velocity)
+    if(horizontalPos - velocity < CANVAS_WIDTH - radius * 2 || horizontalPos > radius) {
+      setHorizontalPos(horizontalPos + velocity)
+    } else {
+      setHorizontalPos(horizontalPos - velocity)
+    }
+  }
+
+  const handleOnYPosChange = (e) => {
+    setVerticalPos(e.target.value);
+    setRadius(radius - 1); 
   }
 
   return (
@@ -38,9 +46,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} />
-              {/* <Ball canvasWidth={CANVAS_WIDTH} canvasHeight={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} /> */}
-              {/* <BallCanvas /> */}
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} />
             </div>
 
             <div className='p-6 bg-slate-100 flex justify-center'>
@@ -108,7 +114,7 @@ function App() {
                 maxValue={660}
                 minValue={50}
                 defaultValue={verticalPos} 
-                onChange={(e) => setVerticalPos(e.target.value)}
+                onChange={(e) => handleOnYPosChange(e)}
               />
           </div>
 
