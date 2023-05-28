@@ -13,11 +13,10 @@ function App() {
   const [acceleration, setAcceleration] = useState(1);
   const [velocity, setVelocity] = useState(20);
   const [horizontalPos, setHorizontalPos] = useState(100);
-  const [verticalPos, setVerticalPos] = useState(50);
-  const [radius, setRadius] = useState(100);
-
-
+  const [verticalPos, setVerticalPos] = useState(72);
+  const [radius, setRadius] = useState(140);
   const [hasDownBounce, setHasDownBounce] = useState(false);
+  const [rotate, setRotate] = useState(0)
 
 
   const handleOnNextButtonClick = () => {
@@ -36,8 +35,20 @@ function App() {
     }
   }
 
+
+
   const handleOnYPosChange = (e) => {
     setVerticalPos(e.target.value);
+
+    setRadius((value) => value - 1);
+    
+  }
+
+  const handleOnXPosChange = (e) => {
+    setHorizontalPos(e.target.value);
+
+    // setRotate((value) => value = 0.02);
+
   }
 
   const handleDownBounce = () => {
@@ -50,7 +61,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
           <div className='p-6 bg-slate-100'>
-            <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} />
+            <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} rotate={rotate} />
 
           </div>
 
@@ -82,7 +93,7 @@ function App() {
         </div>
 
         <div className='bg-white rounded-lg drop-shadow-lg m-10 p-12' >
-          <div>
+          {/* <div>
             <Slider
               title="Percepatan (m/s^2)"
               maxValue={10}
@@ -96,21 +107,21 @@ function App() {
               defaultValue={velocity}
               onChange={(e) => setVelocity(e.target.value)}
             />
-          </div>
+          </div> */}
 
 
           <div className='flex justify-between mt-8'>
             <Slider
               title="Posisi Horizontal"
-              maxValue={950}
-              minValue={50}
+              maxValue={924}
+              minValue={76}
               defaultValue={horizontalPos}
-              onChange={(e) => setHorizontalPos(e.target.value)}
+              onChange={(e) => handleOnXPosChange(e)}
             />
             <Slider
               title="Posisi Vertikal"
-              maxValue={550}
-              minValue={50}
+              maxValue={650}
+              minValue={72}
               defaultValue={verticalPos}
               onChange={(e) => handleOnYPosChange(e)}
             />
@@ -135,7 +146,7 @@ function App() {
 
               <div className="flex justify-between mb-9">
                 <label for="" className="pt-3 text-sm font-medium text-gray-900 dark:text-white">Posisi Vertikal : </label>
-                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={verticalPos} max={150} onChange={(e) => handleOnYPosChange(e)} required />
+                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={verticalPos}  onChange={(e) => handleOnYPosChange(e)} required />
               </div>
 
               <hr className='mb-12' />
