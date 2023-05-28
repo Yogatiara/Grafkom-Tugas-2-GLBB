@@ -10,21 +10,27 @@ function App() {
   const CANVAS_WIDTH = 1000;
   const CANVAS_HEIGHT = 600;
 
+
   const [acceleration, setAcceleration] = useState(1);
   const [velocity, setVelocity] = useState(20);
   const [horizontalPos, setHorizontalPos] = useState(100);
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
-  
- 
+
+
+  const [hasXToRightMove, setHasXToRightMove] = useState(false);
+  const [hasXToLeftMove, setHasXToLeftMove] = useState(false);
   const [hasDownBounce, setHasDownBounce] = useState(false);
 
 
   const handleOnNextButtonClick = () => {
     if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius) {
       setHorizontalPos(horizontalPos - velocity)
+      setHasXToRightMove(true);
     } else {
       setHorizontalPos(horizontalPos + velocity)
+      setHasXToRightMove(true);
+
     }
   }
 
@@ -41,8 +47,9 @@ function App() {
   }
 
   const handleDownBounce = () => {
-      setHasDownBounce(!hasDownBounce);
+    setHasDownBounce(!hasDownBounce);
   }
+
 
 
   return (
@@ -50,7 +57,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} />
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} />
             
             </div>
 
@@ -63,7 +70,7 @@ function App() {
                     </button>
                   </div>
                   <div class="flex justify-center items-center mx-3">   
-                    <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={(e) => setVelocity(e.target.value)} />
+                    <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={(e) => setVelocity(e.target.value)}  />
                   </div>
                   <div class="flex justify-center items-center">   
                     <button class="w-20 h-20 rounded-full bg-blue-500 focus:outline-none flex justify-center items-center" onClick={handleOnNextButtonClick}>

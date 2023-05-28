@@ -3,7 +3,7 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce} = props;
+    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove} = props;
 
     let xspeed = velocity;
     let yspeed = velocity;
@@ -35,30 +35,32 @@ export default function Graphics(props) {
             }
 
             xspeed -= acceleration;
+        } else {
+            setHasXToRightMove(false);
         }
 
     }
 
 
-    const rotateObject = (p5) => {
-         // Menghitung koordinat baru dengan menerapkan transformasi rotasi
-        let newX = pX + (xPos - pX) * Math.cos(angle) - (yPos - pY) * Math.sin(angle);
-        let newY = pY + (xPos - pX) * Math.sin(angle) + (yPos - pY) * Math.cos(angle);
+    // const rotateObject = (p5) => {
+    //      // Menghitung koordinat baru dengan menerapkan transformasi rotasi
+    //     let newX = pX + (xPos - pX) * Math.cos(angle) - (yPos - pY) * Math.sin(angle);
+    //     let newY = pY + (xPos - pX) * Math.sin(angle) + (yPos - pY) * Math.cos(angle);
         
-        // Mengupdate posisi objek
-        xPos = newX;
-        yPos = newY;
+    //     // Mengupdate posisi objek
+    //     xPos = newX;
+    //     yPos = newY;
         
-        // Menggambar objek
-        p5.background(220)
-        p5.translate(100, 100);
-        p5.rotate(angle);
-        p5.line(0, 0, 0, height/8);
+    //     // Menggambar objek
+    //     p5.background(220)
+    //     p5.translate(100, 100);
+    //     p5.rotate(angle);
+    //     p5.line(0, 0, 0, height/8);
         
         
-        // Mengupdate sudut perputaran
-        angle += 0.01;
-    }
+    //     // Mengupdate sudut perputaran
+    //     angle += 0.01;
+    // }
 
     const drawBall = (p5) => {
         p5.stroke(255, 204, 204);
@@ -107,13 +109,17 @@ export default function Graphics(props) {
         p5.rect(0, height - 1, width, 20)
 
     
-        if(!hasDownBounce) {
+        if(hasXToRightMove) {
+            horizontalBouncing();
+        } 
+
+        if(hasXToLeftMove) {
             horizontalBouncing();
         }
 
-        if(hasDownBounce) {
-            verticalBouncing();
-        }
+        // if(hasDownBounce) {
+        //     verticalBouncing();
+        // }
 
 
     }
