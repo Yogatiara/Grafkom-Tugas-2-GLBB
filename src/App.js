@@ -114,6 +114,7 @@ function App() {
               title="Posisi Horizontal"
               maxValue={924}
               minValue={76}
+              step={3}
               defaultValue={horizontalPos}
               onChange={(e) => handleOnXPosChange(e)}
             />
@@ -121,7 +122,6 @@ function App() {
               title="Posisi Vertikal"
               maxValue={650}
               minValue={72}
-              step={0.01}
               defaultValue={verticalPos}
               onChange={(e) => handleOnYPosChange(e)}
             />

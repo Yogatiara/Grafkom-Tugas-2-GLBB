@@ -64,8 +64,8 @@ export default function Graphics(props) {
   const rotateObject = (p5) => {
  
     
-    p5.rotate(angle * Math.pi);
-    angle -= rotate;
+    // p5.rotate(rotate * Math.pi);
+    angle = rotate;
 
     p5.stroke(0, 0,0)
     p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
