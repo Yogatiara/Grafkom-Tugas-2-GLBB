@@ -5,6 +5,7 @@ import Graphic from './components/Graphic';
 import Slider from './components/Slider';
 import ClearButton from './components/ClearButton';
 import RecordButton from './components/RecordButton';
+import Sketch from './components/Sketch';
 
 function App() {
   const CANVAS_WIDTH = 1000;
@@ -24,7 +25,7 @@ function App() {
 
 
   const handleOnNextButtonClick = () => {
-    if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius) {
+    if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius * 2) {
       setHorizontalPos(horizontalPos - velocity)
       setHasXToRightMove(true);
     } else {
@@ -58,6 +59,7 @@ function App() {
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
               <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} />
+              {/* <Sketch /> */}
             
             </div>
 
