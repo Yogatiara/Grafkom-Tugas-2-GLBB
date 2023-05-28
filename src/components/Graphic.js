@@ -3,7 +3,7 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove} = props;
+    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate} = props;
 
     let xspeed = velocity;
     let yspeed = velocity;
@@ -45,33 +45,44 @@ export default function Graphics(props) {
 
     }
 
-
+    let pX = xPos;
+    let pY = height - yPos;
+    let angle = 0;
   
+  
+    const rotateObject = (p5) => {
+
+
+      // p5.rotate(rotate * Math.pi);
+      angle = rotate;
+  
+      p5.stroke(0, 0,0)
+      p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
+
+    }
 
     const drawBall = (p5) => {
-        p5.stroke(255, 204, 204);
+        p5.stroke(255, 204, 204); 
+        p5.fill(255, 204, 204)
+        p5.background(255,255,255);
         p5.circle(xPos, height - yPos, r - (yPos * 0.05))
 
 
         // garis ungu
-        p5.stroke(51, 51, 255)
-        p5.line((xPos - width) + 1000, height - yPos - r / 2 + yPos * 0.025, (xPos - width) + 1000 , height - yPos + r / 2 - yPos * 0.025)
+        // p5.stroke(51, 51, 255)
+        // p5.line((xPos - width) + 1000, height - yPos - r / 2 + yPos * 0.025, (xPos - width) + 1000 , height - yPos + r / 2 - yPos * 0.025)
 
-        // garis putih
-        p5.stroke(255,255,255)
-        p5.line( xPos - r / 2, (height - yPos), xPos + 50, (height - yPos))
+        // // garis putih
+        // p5.stroke(255,255,255)
+        // p5.line( xPos - r / 2, (height - yPos), xPos + 50, (height - yPos))
     }
 
    
     const draw = p5 => {
         p5.clear();
-        p5.smooth();
-
+        
         p5.background(255,255,255);
 
-        p5.frameRate(30);
-        
-        drawBall(p5)
 
         // pembatas kanvas kiri
         p5.fill(118,181,197)
@@ -102,9 +113,13 @@ export default function Graphics(props) {
             horizontalBouncing();
         }
 
-        // if(hasDownBounce) {
-        //     verticalBouncing();
-        // }
+        if(hasDownBounce) {
+            verticalBouncing();
+        }
+
+           
+        drawBall(p5)
+        // rotateObject(p5)
 
 
     }
