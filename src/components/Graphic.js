@@ -8,10 +8,6 @@ export default function Graphics(props) {
     let xspeed = velocity;
     let yspeed = velocity;
 
-    // let pX = xPos;
-    // let pY = yPos;
-    // let angle = 0;
-
 
     // ANTI ALIASING
     let resolution = 8; // Beban efek anti-aliasing (contoh: 8x)
@@ -19,8 +15,7 @@ export default function Graphics(props) {
     let canvasHeight = height;
     let increasedWidth = canvasWidth * resolution; // Resolusi ditingkatkan
     let increasedHeight = canvasHeight * resolution;
-    let circleSize = r;
-
+  
     const verticalBouncing = () => {
          if(yPos != height - r || yspeed != 0) {
             yPos -= yspeed;
@@ -45,42 +40,22 @@ export default function Graphics(props) {
 
             xspeed -= acceleration;
         } else {
-            setHasXToRightMove(false);
+            // setHasXToRightMove(false);
         }
 
     }
 
 
-    // const rotateObject = (p5) => {
-    //      // Menghitung koordinat baru dengan menerapkan transformasi rotasi
-    //     let newX = pX + (xPos - pX) * Math.cos(angle) - (yPos - pY) * Math.sin(angle);
-    //     let newY = pY + (xPos - pX) * Math.sin(angle) + (yPos - pY) * Math.cos(angle);
-        
-    //     // Mengupdate posisi objek
-    //     xPos = newX;
-    //     yPos = newY;
-        
-    //     // Menggambar objek
-    //     p5.background(220)
-    //     p5.translate(100, 100);
-    //     p5.rotate(angle);
-    //     p5.line(0, 0, 0, height/8);
-        
-        
-    //     // Mengupdate sudut perputaran
-    //     angle += 0.01;
-    // }
+  
 
     const drawBall = (p5) => {
         p5.stroke(255, 204, 204);
-        // p5.fill(255, 204, 204)
-        p5.fill("pink");
-        p5.circle(xPos, height - yPos, r)
+        p5.circle(xPos, height - yPos, r - (yPos * 0.05))
 
 
         // garis ungu
         p5.stroke(51, 51, 255)
-        p5.line((xPos - width) + 1000, height - yPos - r / 2, (xPos - width) + 1000 , height - yPos + r / 2)
+        p5.line((xPos - width) + 1000, height - yPos - r / 2 + yPos * 0.025, (xPos - width) + 1000 , height - yPos + r / 2 - yPos * 0.025)
 
         // garis putih
         p5.stroke(255,255,255)
