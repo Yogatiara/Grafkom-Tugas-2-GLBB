@@ -46,8 +46,7 @@ function App() {
 
   const handleOnXPosChange = (e) => {
     setHorizontalPos(e.target.value);
-
-    // setRotate((value) => value = 0.02);
+    setRotate(e.target.value);
 
   }
 
@@ -122,6 +121,7 @@ function App() {
               title="Posisi Vertikal"
               maxValue={650}
               minValue={72}
+              step={0.01}
               defaultValue={verticalPos}
               onChange={(e) => handleOnYPosChange(e)}
             />

@@ -65,10 +65,10 @@ export default function Graphics(props) {
  
     
     p5.rotate(angle * Math.pi);
-    angle += 0.02;
+    angle -= rotate;
 
     p5.stroke(0, 0,0)
-    p5.line((pX + r/2  * Math.cos(angle)), pY + r/2 * Math.sin(angle), (pX - r/2 * Math.cos(angle)), pY - r/2 * Math.sin(angle));
+    p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
 
   
     // garis putih
