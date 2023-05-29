@@ -112,8 +112,8 @@ function App() {
           <div className='flex justify-between mt-8'>
             <Slider
               title="Posisi Horizontal"
-              maxValue={924}
-              minValue={76}
+              maxValue={900}
+              minValue={102}
               step={3}
               defaultValue={horizontalPos}
               onChange={(e) => handleOnXPosChange(e)}

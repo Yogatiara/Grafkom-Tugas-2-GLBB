@@ -68,12 +68,11 @@ export default function Graphics(props) {
     angle = rotate;
 
     p5.stroke(0, 0,0)
-    p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
+    p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r / 2 * Math.sin(angle));
 
-  
-    // garis putih
-    // p5.stroke(51, 51, 255)
-    // p5.line(0, 0, (pX - r / 2 * Math.cos(angle)), pY - r / 2 * Math.sin(angle));
+
+    p5.stroke(51, 51, 255)
+    p5.line(xPos - r / 2 * Math.cos(5 + angle), pY + r / 2 * Math.sin(5 + angle), (xPos - width) + 1000 + r / 2 * Math.cos(5+ angle), pY - r / 2 * Math.sin(5 + angle));
 
    
    
@@ -94,25 +93,25 @@ export default function Graphics(props) {
 
     rotateObject(p5);
 
-    // // pembatas kanvas kiri
-    // p5.fill(118, 181, 197)
-    // p5.stroke(118, 181, 197)
-    // p5.rect(0, 0, 5, height)
+    // pembatas kanvas kiri
+    p5.fill(118, 181, 197)
+    p5.stroke(118, 181, 197)
+    p5.rect(0, 0, 30, height)
 
-    // // pembatas kanvas kanan
-    // p5.fill(118, 181, 197)
-    // p5.stroke(118, 181, 197)
-    // p5.rect(width - 5, 0, 20, height)
+    // pembatas kanvas kanan
+    p5.fill(118, 181, 197)
+    p5.stroke(118, 181, 197)
+    p5.rect(width - 30, 0, 80, height)
 
-    // // pembatas kanvas atas
-    // p5.fill(118, 181, 197)
-    // p5.stroke(118, 181, 197)
-    // p5.rect(0, 0, width, 5)
+    // pembatas kanvas atas
+    p5.fill(118, 181, 197)
+    p5.stroke(118, 181, 197)
+    p5.rect(0, 0, width, 5)
 
-    // // pembatas kanvas bawah
-    // p5.fill(226, 135, 67)
-    // p5.stroke(226, 135, 67)
-    // p5.rect(0, height - 1, width, 20)
+    // pembatas kanvas bawah
+    p5.fill(226, 135, 67)
+    p5.stroke(226, 135, 67)
+    p5.rect(0, height - 1, width, 20)
 
 
     // if (!hasDownBounce) {
