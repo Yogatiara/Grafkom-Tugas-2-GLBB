@@ -5,7 +5,6 @@ import Graphic from './components/Graphic';
 import Slider from './components/Slider';
 import ClearButton from './components/ClearButton';
 import RecordButton from './components/RecordButton';
-import Sketch from './components/Sketch';
 
 function App() {
   const CANVAS_WIDTH = 1000;
@@ -17,7 +16,8 @@ function App() {
   const [horizontalPos, setHorizontalPos] = useState(100);
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
-
+  const [rotate, setRotate] = useState(0)
+  
 
   const [hasXToRightMove, setHasXToRightMove] = useState(false);
   const [hasXToLeftMove, setHasXToLeftMove] = useState(false);
@@ -25,7 +25,7 @@ function App() {
 
 
   const handleOnNextButtonClick = () => {
-    if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius * 2) {
+    if(horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius) {
       setHorizontalPos(horizontalPos - velocity)
       setHasXToRightMove(true);
     } else {
@@ -45,7 +45,15 @@ function App() {
 
   const handleOnYPosChange = (e) => {
     setVerticalPos(e.target.value);
+    setRadius((value) => value - 1);
+
   }
+
+  const handleOnXPosChange = (e) => {
+    setHorizontalPos(e.target.value);
+    setRotate(e.target.value);
+  }
+
 
   const handleDownBounce = () => {
     setHasDownBounce(!hasDownBounce);
@@ -58,8 +66,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} />
-              {/* <Sketch /> */}
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} />
             
             </div>
 
@@ -81,12 +88,20 @@ function App() {
                   </div>
               </div>
               <div>
-              <div class="flex justify-center items-center">   
-                    <button class={"w-20 h-20 rounded-full bg-yellow-600 focus:outline-none flex justify-center items-center " + (hasDownBounce && "bg-yellow-800 drop-shadow-2xl")}onClick={handleDownBounce}>
-                    <svg width="50" height="50" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19 7C17.8954 7 17 6.10457 17 5C17 3.89543 17.8954 3 19 3C20.1046 3 21 3.89543 21 5C21 6.10457 20.1046 7 19 7Z" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> <path d="M4 15.5C7 14.5 9.5 15 12 20C12.5 17 14 12.5 15.5 10" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> </svg>
-                    </button>
-                  </div>
+
+              <div>          
+                <div class="flex items-center mb-4">
+                    <input checked id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Horizontal Moving</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" onClick={handleDownBounce}>Vertical Moving</label>
+                </div>
               </div>
+
+              </div>
+
             </div>
         </div>
 
@@ -96,14 +111,22 @@ function App() {
               title="Percepatan (m/s^2)"
               maxValue={10} 
               defaultValue={acceleration} 
-              onChange={(e) => setAcceleration(e.target.value)}
+              onChange={(e) => {
+                const prevVelocity = velocity;
+                setVelocity(0);
+                setAcceleration(e.target.value);
+                setVelocity(prevVelocity);
+              }}
             />
 
             <Slider 
               title="Kecepatan (m/s)"
               maxValue={1000} 
               defaultValue={velocity} 
-              onChange={(e) => setVelocity(e.target.value)}
+              onChange={(e) => {
+                setVelocity(0);
+                setVelocity(e.target.value);
+              }}
             />
           </div>
 
@@ -113,15 +136,22 @@ function App() {
                 title="Posisi Horizontal"
                 maxValue={950} 
                 minValue={50}
+                step={3}
                 defaultValue={horizontalPos} 
-                onChange={(e) => setHorizontalPos(e.target.value)}
+                onChange={(e) => {
+                  setVelocity(0);
+                  handleOnXPosChange(e);
+                }}
               />
               <Slider 
                 title="Posisi Vertikal"
                 maxValue={550}
                 minValue={50}
                 defaultValue={verticalPos} 
-                onChange={(e) => handleOnYPosChange(e)}
+                onChange={(e) => {
+                  setVelocity(0);
+                  handleOnYPosChange(e);
+                }}
               />
           </div>
 

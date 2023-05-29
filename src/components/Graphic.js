@@ -83,6 +83,7 @@ export default function Graphics(props) {
         
         p5.background(255,255,255);
 
+        // rotateObject(p5);
 
         // pembatas kanvas kiri
         p5.fill(118,181,197)
