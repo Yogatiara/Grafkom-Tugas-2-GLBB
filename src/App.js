@@ -18,6 +18,8 @@ function App() {
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
 
+  const [rotate, setRotate] = useState(0);
+
 
   const [hasXToRightMove, setHasXToRightMove] = useState(false);
   const [hasXToLeftMove, setHasXToLeftMove] = useState(false);
@@ -51,6 +53,11 @@ function App() {
     setHasDownBounce(!hasDownBounce);
   }
 
+  const handleOnXPosChange = (e) => {
+    setHorizontalPos(e.target.value);
+    setRotate(e.target.value);
+
+  }
 
 
   return (
@@ -58,7 +65,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} />
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} />
               {/* <Sketch /> */}
             
             </div>
@@ -103,7 +110,7 @@ function App() {
               title="Kecepatan (m/s)"
               maxValue={1000} 
               defaultValue={velocity} 
-              onChange={(e) => setVelocity(e.target.value)}
+              onChange={(e) => setVelocity(e)}
             />
           </div>
 
@@ -113,13 +120,15 @@ function App() {
                 title="Posisi Horizontal"
                 maxValue={950} 
                 minValue={50}
+                step={3}
                 defaultValue={horizontalPos} 
-                onChange={(e) => setHorizontalPos(e.target.value)}
+                onChange={(e) => handleOnXPosChange(e)}
               />
               <Slider 
                 title="Posisi Vertikal"
                 maxValue={550}
                 minValue={50}
+                
                 defaultValue={verticalPos} 
                 onChange={(e) => handleOnYPosChange(e)}
               />

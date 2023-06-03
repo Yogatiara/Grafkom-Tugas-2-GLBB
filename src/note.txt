@@ -2,12 +2,14 @@
     - susun ulang algoritmanya, hanya bisa berubah kecepatan kalau diklik tombolnya
     - coba buat dua, satu buat ganti nilai input posisi di App.js satunya lagi buat ganti posisi 
     
-- benerin bouncing untuk ke arah kiri
-
-- masih ada bug di posisi terakhir objek di kanvas
-- benerin nilai dari objek terbaru di input
+- benerin bouncing untuk ke arah kiri [DONE]
+    - masih ada bug di posisi terakhir objek di kanvas [DONE]
+    - benerin nilai dari objek terbaru di input [DONE]
 - benerin posisi objek setelah down bouncing biar ngak tenggelam
 - tambahin biar bisa putar bolanya
-- semakin ke atas semakin kecil ukuran bolanya
-- tambahin anti aliasing sendiri
+- semakin ke atas semakin kecil ukuran bolanya [DONE]
+- tambahin anti aliasing sendiri [DONE]
 
+
+
+- Posisi Akhir Bola Setalah Bouncing
