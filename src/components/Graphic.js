@@ -53,28 +53,29 @@ export default function Graphics(props) {
   
 
     const drawBall = (p5, x, y) => {
-        p5.stroke(255, 204, 204);
-        p5.circle(x, height - y, r - (y * 0.05))
-    }
+      p5.fill("red")
+      p5.stroke("black");
+      p5.circle(x, height - y, r - (y * 0.1))
+  }
 
     let pX = xPos;
     // let pY = height - yPos;
     let angle = 0;
+    let angle1 = 0;
   
 
     const rotateObject = (p5, x, y) => {
       let pY = height - y;
 
-    
-      // p5.rotate(rotate * Math.pi);
       angle = rotate;
+      angle1 =   rotate - 3.59;
   
-      p5.stroke("white")
-      p5.line(x - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (x - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
+      p5.stroke("black")
+      p5.line(x - (r - (y * 0.1)) / 2 * Math.cos(2 + angle1), pY + (r - (y * 0.1)) / 2 * Math.sin(2 + angle1), (x - width) + 1000 + (r - (y * 0.1)) / 2 * Math.cos(2 + angle1), pY - (r - (y * 0.1)) / 2 * Math.sin(2 + angle1));
   
     
-      p5.stroke("white")
-      p5.line(x - r / 2 * Math.cos(2 + angle), pY + r / 2 * Math.sin(2 + angle), (x - width) + 1000 + r / 2 * Math.cos(2 + angle), pY - r/2 * Math.sin(2 + angle));
+      p5.stroke("black")
+      p5.line(x - (r - (y * 0.1)) / 2 * Math.cos(angle), pY + (r - (y * 0.1)) / 2 * Math.sin(angle), (x - width) + 1000 + (r - (y * 0.1)) / 2 * Math.cos(angle), pY - (r - (y * 0.1)) / 2 * Math.sin(angle));
      
     }
 

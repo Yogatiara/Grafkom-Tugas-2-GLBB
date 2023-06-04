@@ -46,7 +46,18 @@ function App() {
   }
 
   const handleOnYPosChange = (e) => {
+    setHasXToRightMove(false);
+    setHasXToRightMove(false);
+    setHasDownBounce(false);
     setVerticalPos(e.target.value);
+  }
+
+  const handleOnXPosChange = (e) => {
+    setHasXToRightMove(false);
+    setHasXToRightMove(false);
+    setHasDownBounce(false);
+    setHorizontalPos(e.target.value);
+    setRotate(e.target.value);
   }
 
   const handleDownBounce = () => {
@@ -55,10 +66,7 @@ function App() {
     setHasDownBounce(!hasDownBounce);
   }
 
-  const handleOnXPosChange = (e) => {
-    setHorizontalPos(e.target.value);
-    setRotate(e.target.value);
-  }
+ 
 
   const handleVerAndHorBouncing = () => {
     setHasDownBounce(true);
