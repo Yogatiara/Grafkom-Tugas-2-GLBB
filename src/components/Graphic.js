@@ -3,11 +3,15 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-  let { xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate, setVerticalPos } = props;
+  let { xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHorizontalPos, rotate, setVerticalPos, setVelocity } = props;
 
 
   let xspeed = velocity;
   let yspeed = velocity;
+
+  let angle = 0;
+  let angle1 = 0;
+  
 
 
   // ANTI ALIASING
@@ -32,20 +36,27 @@ export default function Graphics(props) {
   }
 
 
-
+ 
   const horizontalBouncing = () => {
+    
     if (xspeed != 0) {
       xPos += xspeed;
+      rotate = xPos / 50
+ 
+      
       if (xPos < 0 || xPos > width - r) {
         xspeed = -xspeed;
         acceleration = -acceleration;
-        xPos = Math.max(r / 2, Math.min(xPos, width - r / 2));
+        xPos = Math.max(50, Math.min(xPos, width - r/2));
+        rotate = xPos / 50
+        
       }
-
       xspeed -= acceleration;
-    } else {
-      // setHasXToRightMove(false);
+      
+ 
+     
     }
+    setVelocity(xspeed);
 
   }
 
@@ -58,13 +69,9 @@ export default function Graphics(props) {
     p5.circle(x, height - y, r - (y * 0.1))
   }
 
-  let pX = xPos;
-  // let pY = height - yPos;
-  let angle = 0;
-  let angle1 = 0;
 
 
-  const rotateObject = (p5, x, y) => {
+  const rotateObject = (p5, x, y, rotate) => {
     let pY = height - y;
 
     angle = rotate;
@@ -89,7 +96,7 @@ export default function Graphics(props) {
     p5.frameRate(30);
 
     drawBall(p5, xPos, yPos)
-    rotateObject(p5, xPos, yPos)
+    rotateObject(p5, xPos, yPos, rotate)
 
     // pembatas kanvas kiri
     p5.fill(118, 181, 197)

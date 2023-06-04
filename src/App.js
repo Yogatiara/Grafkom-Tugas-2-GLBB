@@ -11,15 +11,12 @@ function App() {
   const CANVAS_WIDTH = 1000;
   const CANVAS_HEIGHT = 600;
 
-
   const [acceleration, setAcceleration] = useState(1);
   const [velocity, setVelocity] = useState(20);
-  const [horizontalPos, setHorizontalPos] = useState(100);
+  const [horizontalPos, setHorizontalPos] = useState(120);
   const [verticalPos, setVerticalPos] = useState(50);
   const [radius, setRadius] = useState(100);
-
   const [rotate, setRotate] = useState(0);
-
 
   const [hasXToRightMove, setHasXToRightMove] = useState(false);
   const [hasXToLeftMove, setHasXToLeftMove] = useState(false);
@@ -28,10 +25,8 @@ function App() {
 
   const handleOnNextButtonClick = () => {
     if (horizontalPos + velocity > CANVAS_WIDTH - radius * 2 || horizontalPos < radius * 2) {
-      setHorizontalPos(horizontalPos - velocity)
       setHasXToRightMove(true);
     } else {
-      setHorizontalPos(horizontalPos + velocity)
       setHasXToRightMove(true);
 
     }
@@ -39,9 +34,10 @@ function App() {
 
   const handleOnPrevButtonClick = () => {
     if (horizontalPos - velocity < CANVAS_WIDTH - radius * 2 || horizontalPos > radius) {
-      setHorizontalPos(horizontalPos + velocity)
+      setHasXToRightMove(true);
     } else {
       setHorizontalPos(-(horizontalPos - velocity))
+      setHasXToRightMove(true);
     }
   }
 
@@ -66,6 +62,14 @@ function App() {
     setHasDownBounce(!hasDownBounce);
   }
 
+  const handleVelocity =(e) => {
+    // setHasXToRightMove(true);
+    setHasXToRightMove(false);
+
+    setHasDownBounce(false);
+    setVelocity(e.target.value);
+  }
+
 
 
   const handleVerAndHorBouncing = () => {
@@ -84,8 +88,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
           <div className='p-6 bg-slate-100'>
-            <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} setVerticalPos={setVerticalPos} />
-
+            <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} setVerticalPos={setVerticalPos} setVelocity={setVelocity} setHorizontalPos={setHorizontalPos} />
           </div>
 
           <div className='p-6 bg-slate-100 flex justify-between'>
@@ -97,7 +100,7 @@ function App() {
                 </button>
               </div>
               <div class="flex justify-center items-center mx-3">
-                <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={(e) => setVelocity(e.target.value)} />
+                <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={handleVelocity} />
               </div>
               <div class="flex justify-center items-center">
                 <button class="w-20 h-20 rounded-full bg-blue-500 focus:outline-none flex justify-center items-center" onClick={handleOnNextButtonClick}>
@@ -131,7 +134,7 @@ function App() {
         </div>
 
         <div className='bg-white rounded-lg drop-shadow-lg m-10 p-12' >
-          <div>
+          {/* <div>
             <Slider
               title="Percepatan (m/s^2)"
               maxValue={10}
@@ -145,7 +148,7 @@ function App() {
               defaultValue={velocity}
               onChange={(e) => setVelocity(e)}
             />
-          </div>
+          </div> */}
 
 
           <div className='flex justify-between mt-8'>
@@ -153,7 +156,7 @@ function App() {
               title="Posisi Horizontal"
               maxValue={950}
               minValue={50}
-              step={3}
+              step={3.1}
               defaultValue={horizontalPos}
               onChange={(e) => handleOnXPosChange(e)}
             />
