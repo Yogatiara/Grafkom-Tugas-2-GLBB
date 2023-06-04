@@ -17,20 +17,22 @@ export default function Graphics(props) {
     let increasedWidth = canvasWidth * resolution; // Resolusi ditingkatkan
     let increasedHeight = canvasHeight * resolution;
   
-    const verticalBouncing = (p5) => {
+
+    const verticalBouncing = () => {
          if(yPos != height - r || yspeed != 0) {
             yPos -= yspeed;
             if(yPos > height -r || yPos < r) {
-                yPos = Math.max(0, Math.min(yPos, height - r));
+                yPos = Math.max(r / 2, Math.min(yPos, height - r));
                 yspeed *= -1;
                 yspeed *= 0.8;
             }
 
-
             yspeed++;
-        } 
+        }
     }
 
+    
+  
     const horizontalBouncing = () => {
         if(xspeed != 0) {
             xPos += xspeed;
