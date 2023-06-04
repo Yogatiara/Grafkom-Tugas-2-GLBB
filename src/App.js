@@ -50,13 +50,24 @@ function App() {
   }
 
   const handleDownBounce = () => {
+    setHasXToRightMove(false);
+    setHasXToRightMove(false);
     setHasDownBounce(!hasDownBounce);
   }
 
   const handleOnXPosChange = (e) => {
     setHorizontalPos(e.target.value);
     setRotate(e.target.value);
+  }
 
+  const handleVerAndHorBouncing = () => {
+    setHasDownBounce(true);
+    setHasXToRightMove(true);
+  }
+
+  const handleRadioHorChecked = () => {
+    setHasDownBounce(false);
+    setHasXToRightMove(!hasXToRightMove);
   }
 
 
@@ -65,8 +76,7 @@ function App() {
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} />
-              {/* <Sketch /> */}
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} setVerticalPos={setVerticalPos} />
             
             </div>
 
@@ -88,11 +98,26 @@ function App() {
                   </div>
               </div>
               <div>
-              <div class="flex justify-center items-center">   
-                    <button class={"w-20 h-20 rounded-full bg-yellow-600 focus:outline-none flex justify-center items-center " + (hasDownBounce && "bg-yellow-800 drop-shadow-2xl")}onClick={handleDownBounce}>
+              <div>   
+                    {/* <button class={"w-20 h-20 rounded-full bg-yellow-600 focus:outline-none flex justify-center items-center " + (hasDownBounce && "bg-yellow-800 drop-shadow-2xl")}onClick={handleDownBounce}>
                     <svg width="50" height="50" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19 7C17.8954 7 17 6.10457 17 5C17 3.89543 17.8954 3 19 3C20.1046 3 21 3.89543 21 5C21 6.10457 20.1046 7 19 7Z" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> <path d="M4 15.5C7 14.5 9.5 15 12 20C12.5 17 14 12.5 15.5 10" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> </svg>
-                    </button>
-                  </div>
+                    </button> */}
+
+                    <div class="flex items-center mb-4">
+                        <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={handleRadioHorChecked} />
+                        <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Horizontal Bouncing</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={handleDownBounce} />
+                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vertical Bounting</label>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={handleVerAndHorBouncing} />
+                        <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vertical and Horizontal Bouncing</label>
+                    </div>
+
+              </div>
               </div>
             </div>
         </div>

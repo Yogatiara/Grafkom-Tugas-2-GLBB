@@ -3,7 +3,8 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate} = props;
+    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate, setVerticalPos} = props;
+
 
     let xspeed = velocity;
     let yspeed = velocity;
@@ -16,7 +17,7 @@ export default function Graphics(props) {
     let increasedWidth = canvasWidth * resolution; // Resolusi ditingkatkan
     let increasedHeight = canvasHeight * resolution;
   
-    const verticalBouncing = () => {
+    const verticalBouncing = (p5) => {
          if(yPos != height - r || yspeed != 0) {
             yPos -= yspeed;
             if(yPos > height -r || yPos < r) {
@@ -25,8 +26,9 @@ export default function Graphics(props) {
                 yspeed *= 0.8;
             }
 
+
             yspeed++;
-        }
+        } 
     }
 
     const horizontalBouncing = () => {
@@ -48,43 +50,29 @@ export default function Graphics(props) {
 
   
 
-    const drawBall = (p5) => {
+    const drawBall = (p5, x, y) => {
         p5.stroke(255, 204, 204);
-        p5.circle(xPos, height - yPos, r - (yPos * 0.05))
-
-
-        // // garis ungu
-        // p5.stroke(51, 51, 255)
-        // p5.line((xPos - width) + 1000, height - yPos - r / 2 + yPos * 0.025, (xPos - width) + 1000 , height - yPos + r / 2 - yPos * 0.025)
-
-        // // garis putih
-        // p5.stroke(255,255,255)
-        // p5.line( xPos - r / 2, (height - yPos), xPos + 50, (height - yPos))
+        p5.circle(x, height - y, r - (y * 0.05))
     }
 
     let pX = xPos;
-    let pY = height - yPos;
+    // let pY = height - yPos;
     let angle = 0;
   
 
-    const rotateObject = (p5) => {
- 
+    const rotateObject = (p5, x, y) => {
+      let pY = height - y;
+
     
       // p5.rotate(rotate * Math.pi);
       angle = rotate;
   
       p5.stroke("white")
-      p5.line(xPos - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (xPos - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
+      p5.line(x - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (x - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
   
     
       p5.stroke("white")
-      p5.line(xPos - r / 2 * Math.cos(2 + angle), pY + r / 2 * Math.sin(2 + angle), (xPos - width) + 1000 + r / 2 * Math.cos(2 + angle), pY - r/2 * Math.sin(2 + angle));
-
-      // garis putih
-      // p5.stroke(51, 51, 255)
-      // p5.line(0, 0, (pX - r / 2 * Math.cos(angle)), pY - r / 2 * Math.sin(angle));
-  
-     
+      p5.line(x - r / 2 * Math.cos(2 + angle), pY + r / 2 * Math.sin(2 + angle), (x - width) + 1000 + r / 2 * Math.cos(2 + angle), pY - r/2 * Math.sin(2 + angle));
      
     }
 
@@ -97,8 +85,8 @@ export default function Graphics(props) {
 
         p5.frameRate(30);
         
-        drawBall(p5)
-        rotateObject(p5)
+        drawBall(p5, xPos, yPos)
+        rotateObject(p5, xPos, yPos)
 
         // pembatas kanvas kiri
         p5.fill(118,181,197)
@@ -129,12 +117,14 @@ export default function Graphics(props) {
             horizontalBouncing();
         }
 
-        // if(hasDownBounce) {
-        //     verticalBouncing();
-        // }
+        if(hasDownBounce) {
+            verticalBouncing(p5);
+        }
 
 
     }
+
+    // setVerticalPos(yChange)
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(width, height).parent(canvasParentRef);
