@@ -79,6 +79,14 @@ function App() {
   }
 
 
+  const handleVelocityChange = (e) => {
+    setHasXToRightMove(false);
+    setHasXToRightMove(false);
+    setHasDownBounce(false);
+    setVelocity(e.target.value)
+  }
+
+
   return (
     <div className="min-h-[100vh] bg-sky-100">
       <div className='flex justify-center items-start'>
@@ -97,7 +105,7 @@ function App() {
                     </button>
                   </div>
                   <div class="flex justify-center items-center mx-3">   
-                    <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={(e) => setVelocity(e.target.value)}  />
+                    <input type="number" className="ml-3 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center text-[2rem]" value={velocity} onChange={handleVelocityChange}  />
                   </div>
                   <div class="flex justify-center items-center">   
                     <button class="w-20 h-20 rounded-full bg-blue-500 focus:outline-none flex justify-center items-center" onClick={handleOnNextButtonClick}>
@@ -107,10 +115,6 @@ function App() {
               </div>
               <div>
               <div>   
-                    {/* <button class={"w-20 h-20 rounded-full bg-yellow-600 focus:outline-none flex justify-center items-center " + (hasDownBounce && "bg-yellow-800 drop-shadow-2xl")}onClick={handleDownBounce}>
-                    <svg width="50" height="50" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19 7C17.8954 7 17 6.10457 17 5C17 3.89543 17.8954 3 19 3C20.1046 3 21 3.89543 21 5C21 6.10457 20.1046 7 19 7Z" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> <path d="M4 15.5C7 14.5 9.5 15 12 20C12.5 17 14 12.5 15.5 10" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"/> </svg>
-                    </button> */}
-
                     <div class="flex items-center mb-4">
                         <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onClick={handleRadioHorChecked} />
                         <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Horizontal Bouncing</label>
@@ -131,22 +135,6 @@ function App() {
         </div>
 
         <div className='bg-white rounded-lg drop-shadow-lg m-10 p-12' >
-          <div>
-            <Slider 
-              title="Percepatan (m/s^2)"
-              maxValue={10} 
-              defaultValue={acceleration} 
-              onChange={(e) => setAcceleration(e.target.value)}
-            />
-
-            <Slider 
-              title="Kecepatan (m/s)"
-              maxValue={1000} 
-              defaultValue={velocity} 
-              onChange={(e) => setVelocity(e)}
-            />
-          </div>
-
 
           <div className='flex justify-between mt-8'>
               <Slider 

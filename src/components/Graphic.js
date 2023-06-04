@@ -36,10 +36,12 @@ export default function Graphics(props) {
     const horizontalBouncing = () => {
         if(xspeed != 0) {
             xPos += xspeed;
+            rotate = xPos;
             if(xPos < 0 || xPos > width - r) {
                 xspeed = -xspeed;
                 acceleration = -acceleration;
                 xPos = Math.max(r / 2, Math.min(xPos, width - r / 2));
+                rotate = xPos;
             }
 
             xspeed -= acceleration;
