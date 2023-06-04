@@ -19,10 +19,10 @@ export default function Graphics(props) {
   
 
     const verticalBouncing = () => {
-         if(yPos != height - r || yspeed != 0) {
+         if(yPos != height - r / 2 || yspeed != 0) {
             yPos -= yspeed;
-            if(yPos > height -r || yPos < r) {
-                yPos = Math.max(r / 2, Math.min(yPos, height - r));
+            if(yPos > height - r / 2 || yPos < r / 2) {
+                yPos = Math.max(r / 2, Math.min(yPos, height - r / 2));
                 yspeed *= -1;
                 yspeed *= 0.8;
             }
@@ -39,7 +39,7 @@ export default function Graphics(props) {
             if(xPos < 0 || xPos > width - r) {
                 xspeed = -xspeed;
                 acceleration = -acceleration;
-                xPos = Math.max(0, Math.min(xPos, width - r));
+                xPos = Math.max(r / 2, Math.min(xPos, width - r / 2));
             }
 
             xspeed -= acceleration;
