@@ -17,62 +17,62 @@ export default function Graphics(props) {
     let increasedWidth = canvasWidth * resolution; // Resolusi ditingkatkan
     let increasedHeight = canvasHeight * resolution;
   
-    const verticalBouncing = (p5) => {
-         if(yPos != height - r || yspeed != 0) {
-            yPos -= yspeed;
-            if(yPos > height -r || yPos < r) {
-                yPos = Math.max(0, Math.min(yPos, height - r));
-                yspeed *= -1;
-                yspeed *= 0.8;
-            }
-
-
-            yspeed++;
-        } 
-    }
-
-    const horizontalBouncing = () => {
-        if(xspeed != 0) {
-            xPos += xspeed;
-            if(xPos < 0 || xPos > width - r) {
-                xspeed = -xspeed;
-                acceleration = -acceleration;
-                xPos = Math.max(0, Math.min(xPos, width - r));
-            }
-
-            xspeed -= acceleration;
-        } else {
-            // setHasXToRightMove(false);
+    const verticalBouncing = () => {
+      if (yPos != height - r || yspeed != 0) {
+        yPos -= yspeed;
+        if (yPos > height - r || yPos < r) {
+          yPos = Math.max(r /2 , Math.min(yPos, height - r));
+          yspeed *= -1;
+          yspeed *= 0.8;
         }
 
+        yspeed++;
+      }
     }
+
+  const horizontalBouncing = () => {
+    if (xspeed != 0) {
+      xPos += xspeed;
+      if (xPos < 0 || xPos > width - r) {
+        xspeed = -xspeed;
+        acceleration = -acceleration;
+        xPos = Math.max(r, Math.min(xPos, width - r));
+      }
+
+      xspeed -= acceleration;
+    } else {
+      // setHasXToRightMove(false);
+    }
+
+  }
 
 
   
 
     const drawBall = (p5, x, y) => {
-        p5.stroke(255, 204, 204);
-        p5.circle(x, height - y, r - (y * 0.05))
+        p5.fill("red")
+        p5.stroke("black");
+        p5.circle(x, height - y, r - (y * 0.1))
     }
 
     let pX = xPos;
     // let pY = height - yPos;
     let angle = 0;
+    let angle1 = 0;
   
 
     const rotateObject = (p5, x, y) => {
       let pY = height - y;
 
-    
-      // p5.rotate(rotate * Math.pi);
       angle = rotate;
+      angle1 =   rotate - 3.59;
   
-      p5.stroke("white")
-      p5.line(x - r / 2 * Math.cos(angle), pY + r / 2 * Math.sin(angle), (x - width) + 1000 + r / 2 * Math.cos(angle), pY - r/2 * Math.sin(angle));
+      p5.stroke("black")
+      p5.line(x - (r - (y * 0.1)) / 2 * Math.cos(2 + angle1), pY + (r - (y * 0.1)) / 2 * Math.sin(2 + angle1), (x - width) + 1000 + (r - (y * 0.1)) / 2 * Math.cos(2 + angle1), pY - (r - (y * 0.1)) / 2 * Math.sin(2 + angle1));
   
     
-      p5.stroke("white")
-      p5.line(x - r / 2 * Math.cos(2 + angle), pY + r / 2 * Math.sin(2 + angle), (x - width) + 1000 + r / 2 * Math.cos(2 + angle), pY - r/2 * Math.sin(2 + angle));
+      p5.stroke("black")
+      p5.line(x - (r - (y * 0.1)) / 2 * Math.cos(angle), pY + (r - (y * 0.1)) / 2 * Math.sin(angle), (x - width) + 1000 + (r - (y * 0.1)) / 2 * Math.cos(angle), pY - (r - (y * 0.1)) / 2 * Math.sin(angle));
      
     }
 
