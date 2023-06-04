@@ -33,15 +33,16 @@ function App() {
     } else {
       setHorizontalPos(horizontalPos + velocity)
       setHasXToRightMove(true);
-
     }
   }
 
   const handleOnPrevButtonClick = () => {
     if(horizontalPos - velocity < CANVAS_WIDTH - radius * 2 || horizontalPos > radius) {
       setHorizontalPos(horizontalPos + velocity)
+      updateXPos()
     } else {
       setHorizontalPos(-(horizontalPos - velocity))
+      updateXPos()
     }
   }
 
@@ -63,7 +64,8 @@ function App() {
   const handleDownBounce = () => {
     setHasXToRightMove(false);
     setHasXToRightMove(false);
-    setHasDownBounce(!hasDownBounce);
+    setHasDownBounce(true);
+    updateYPos();
   }
 
  
@@ -75,7 +77,8 @@ function App() {
 
   const handleRadioHorChecked = () => {
     setHasDownBounce(false);
-    setHasXToRightMove(!hasXToRightMove);
+    setHasXToRightMove(true);
+    updateXPos();
   }
 
 
@@ -86,13 +89,55 @@ function App() {
     setVelocity(e.target.value)
   }
 
+ const handleXPosBounce = (xPos) => {
+  setHorizontalPos(xPos);
+ }
+
+
+ let xspeed = velocity;
+ let yspeed = velocity;
+
+ let xPos = horizontalPos;
+ let yPos = verticalPos;
+ let rotation = 0;
+
+ let acc = acceleration;
+
+ const updateXPos = () => {
+    if(xspeed != 0) {
+      xPos += xspeed;
+      rotation = xPos;
+      if(xPos < 0 || xPos > CANVAS_WIDTH - radius) {
+          xspeed = -xspeed;
+          acc = -acc;
+          xPos = Math.max(radius / 2, Math.min(xPos, CANVAS_WIDTH - radius / 2));
+          rotation = xPos;
+        }
+        
+        xspeed -= acc;
+        setHorizontalPos(xPos)
+    }
+ }
+
+ const updateYPos = () => {
+     setVerticalPos(50);
+ }
+
+ const formatHorPosValue = (value) => {
+  if(value < 0) {
+    return CANVAS_WIDTH - Math.abs(value)
+  } else {
+    return value
+  }
+ }
+
 
   return (
     <div className="min-h-[100vh] bg-sky-100">
       <div className='flex justify-center items-start'>
         <div className="m-10 drop-shadow-lg">
             <div className='p-6 bg-slate-100'>
-              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} setVerticalPos={setVerticalPos} />
+              <Graphic width={CANVAS_WIDTH} height={CANVAS_HEIGHT} xPos={horizontalPos} yPos={verticalPos} velocity={velocity} acceleration={acceleration} r={radius} hasDownBounce={hasDownBounce} hasXToRightMove={hasXToRightMove} hasXToLeftMove={hasXToLeftMove} setHasXToLeftMove={setHasXToLeftMove} setHasXToRightMove={setHasXToRightMove} rotate={rotate} step={3} setVerticalPos={setVerticalPos} setHorizontalPos={handleXPosBounce} setVelocity={setVelocity} />
             
             </div>
 
@@ -169,7 +214,7 @@ function App() {
               </div>
               <div className="flex justify-between mb-9">
                 <label for="" className="pt-3 text-sm font-medium text-gray-900 dark:text-white">Posisi Horizontal : </label>
-                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={horizontalPos} onChange={(e) => setHorizontalPos(e.target.value)}  max={150} required/>
+                <input type="number" id="" className="ml-6 bg-sky-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-32 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={formatHorPosValue(horizontalPos)} onChange={(e) => setHorizontalPos(e.target.value)}  max={150} required/>
               </div>
 
               <div className="flex justify-between mb-9">

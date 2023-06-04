@@ -3,7 +3,7 @@ import propType from 'prop-types';
 import Sketch from 'react-p5';
 
 export default function Graphics(props) {
-    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate, setVerticalPos} = props;
+    let {xPos, velocity, acceleration, width, height, yPos, r, hasDownBounce, hasXToRightMove, hasXToLeftMove, setHasXToRightMove, rotate, setVerticalPos, setHorizontalPos, setVelocity} = props;
 
 
     let xspeed = velocity;
@@ -45,14 +45,13 @@ export default function Graphics(props) {
             }
 
             xspeed -= acceleration;
-        } else {
+          } else {
             // setHasXToRightMove(false);
-        }
-
+          }
+          
     }
+    
 
-
-  
 
     const drawBall = (p5, x, y) => {
       p5.fill("red")
@@ -126,10 +125,10 @@ export default function Graphics(props) {
             verticalBouncing(p5);
         }
 
+        
 
     }
 
-    // setVerticalPos(yChange)
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(width, height).parent(canvasParentRef);
